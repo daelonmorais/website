@@ -18,14 +18,14 @@ theme = "hugo-sustain"
   # Custom assets can be linked with their paths relative to static/
   custom_css = []
   custom_js  = []
-
+ 
 [params.social]
   Github        = "daelonmorais"
   Email         = "daelon.morais@utexas.edu.com"
 
 ## Main Menu
 [[menu.main]]
-  name = "My Blog"
+  name = "My Computational Biology Blog"
   weight = 100
   identifier = "blog"
   url = "/blog/"
