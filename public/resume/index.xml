@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Resumes on Project 3</title>
+    <link>/resume/</link>
+    <description>Recent content in Resumes on Project 3</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    
+	<atom:link href="/resume/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Project1 SDS348</title>
+      <link>/resume/project1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/resume/project1/</guid>
+      <description>Introduction The first dataset contains income and poverty data by county for all counties in Texas. It contains the variables: Counties, Per Capita Income, Median Household Income, and % of Population in Poverty. The second dataset contains data about the level of education and employment by county and contains the variables: Counties, % High School Graduate or Higher, % Bachelor s Degree or Higher, and Unemployment Rate (%). The third dataset contains data on opioid-related emergency department visits in 2017 by county.</description>
+    </item>
+    
+  </channel>
+</rss>

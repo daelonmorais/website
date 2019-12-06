@@ -1,12 +1,75 @@
----
-title: "Project1 SDS348"
-author: "Daelon Morais"
-date: "10/13/2019"
-output:
-  html_document: default
-  pdf_document: default
----
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Daelon Morais" />
+    <meta name="description" content="A SDS348 Project">
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>Project1 SDS348</title>
+    <meta name="generator" content="Hugo 0.60.1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
 
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/blog/">MY COMPUTATIONAL BIOLOGY BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="/resume/project1/">Project1 SDS348</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          January 1, 0001
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
 
 
 <div id="introduction" class="section level2">
@@ -239,12 +302,12 @@ twoCatData%&gt;% filter(percentDegreeRange==&quot;high&quot;) %&gt;%group_by(per
 <div id="visualizing" class="section level2">
 <h2>4. Visualizing</h2>
 <pre class="r"><code>ggplot(fulldata, aes(x=`% Bachelor s Degree or Higher`))+geom_point(aes(y=`Per Capita Income`, size=(fulldata$`Number of Opioid-Related Emergency Department Visits`)), shape = 21,colour=&#39;black&#39;,fill=&#39;#1876f0&#39;)+scale_size_continuous(name = &quot;Opioid-Related ED Visits&quot;)+ ggtitle(&quot;Plot of Per Captia Income by % of a County&#39;s Population with a Bachelor&#39;s Degree or Higher&quot;)+ylab(&quot;Per Capita Income ($)&quot;) + xlab(&quot;County&#39;s Population with a Bachelor&#39;s Degree or Higher (%)&quot;)+scale_y_continuous(breaks=seq(0,80000,5000))+theme(axis.text.x = element_text(colour=&quot;#f08f18&quot;),axis.text.y = element_text(colour=&quot;#65a11e&quot;),plot.title = element_text(size=10))</code></pre>
-<p><img src="/blog/Project1_files/figure-html/Visualizing-1.png" width="672" /></p>
+<p><img src="/resume/Project1_files/figure-html/Visualizing-1.png" width="672" /></p>
 <pre class="r"><code>fulldata1&lt;-fulldata
 fulldata1&lt;-fulldata1%&gt;% pivot_longer(contains(&quot;%&quot;))
 
 ggplot(fulldata1, aes(x = name, y = value, fill=value))+ geom_bar(stat=&quot;summary&quot;,fun.y=&quot;mean&quot;,fill=c(&quot;#27b3b6&quot;,&quot;#65a11e&quot;,&quot;#f08f18&quot;,&quot;#b6277f&quot;))+theme(axis.text.x = element_text(angle=45, hjust=1, size=10))+ ggtitle(&quot;Education and Economic Statistics of Texas Counties&quot;)+ylab(&quot;Percentage of the Population (%)&quot;) + xlab(&quot;Average of All County Statistics&quot;)</code></pre>
-<p><img src="/blog/Project1_files/figure-html/Visualizing-2.png" width="672" />
+<p><img src="/resume/Project1_files/figure-html/Visualizing-2.png" width="672" />
 The “Plot of Per Captia Income by % of a County’s Population with a Bachelor’s Degree or Higher” scatterplot shows a somewhat positive association between the proportion of a county’s population with a Bachelor’s degree or higher and an increasing per capita income which is too be expected since higher levels of education typically accompany higher paying jobs. I set the size of the points to be proportional to the number of opioid related ED visits. There is less of a clear trend when it comes to this variable but it does appear that a higher number of ED visits is associated with higher per capita income. The reason for this is equally obfuscated but it is possible that having excess income or higher SES may lead to more risky health behaviours. This may also be due to the fact that those with a higher SES and income are more likely to have access to and utilize healthcare.
 For the bar graph there are not any relationships or trends to look at in particular. The average proportion of the population that has graduated high school or higher is above 80% which seems quite high although I do not have any standards to compare it too. The unemployment rate also seems quite low, looking it up right now, the US current unemployment rate is 3.7% which is below the average 4.25% rate for Texas counties.
 ## 5. Dimensionality Reduction (20 pts)</p>
@@ -297,21 +360,78 @@ eigval&lt;-fulldata_pca$sdev^2#square to convert SDs to eigenvalues
 varprop=round(eigval/sum(eigval),2) #proportion of var explained by each PC</code></pre>
 <p>I scaled and selected the numeric variables from my data to use with princomp. I then used the summary function to look at the standard deviation, proportion of variance, and cummulative proportion of each PC.</p>
 <pre class="r"><code>ggplot()+geom_bar(aes(y=varprop,x=1:7),stat=&quot;identity&quot;)+xlab(&quot;&quot;)+geom_path(aes(y=varprop,x=1:7))+  geom_text(aes(x=1:7,y=varprop,label=round(varprop,2)),vjust=1,col=&quot;white&quot;,size=5)+  scale_y_continuous(breaks=seq(0,.6,.2),labels = scales::percent)+  scale_x_continuous(breaks=1:10)</code></pre>
-<p><img src="/blog/Project1_files/figure-html/Dimensionality%20Reduction%202-1.png" width="672" /></p>
+<p><img src="/resume/Project1_files/figure-html/Dimensionality%20Reduction%202-1.png" width="672" /></p>
 <p>The first 4 PC make up .78 (close to .8) of the total variance proportion and it’s hard to tell where the “elbow” is so I chose them to continue with.</p>
 <pre class="r"><code>library(ggrepel)
 fulldata_df&lt;- fulldata %&gt;% mutate(PC1=fulldata_pca$scores[,1], PC2=fulldata_pca$scores[,2])
 ggplot(fulldata_df, aes(PC1,PC2,color=OpioidVisits))+geom_point()+geom_text_repel(aes(label=County),color=&quot;black&quot;)</code></pre>
-<p><img src="/blog/Project1_files/figure-html/Dimensionality%20Reduction%203-1.png" width="672" /></p>
+<p><img src="/resume/Project1_files/figure-html/Dimensionality%20Reduction%203-1.png" width="672" /></p>
 <p>PC1 does not seem to adequately separate the dataset based on whether the county in question has a high, medium, or low amount of opioid related ED visits. PC2 also does not do a very good job of sepaparting the number opioid ED visits but a high number opioid ED visits does appear to be higher than the low and medium visits.</p>
 <pre class="r"><code>fulldata_df&lt;- fulldata %&gt;% mutate(PC3=fulldata_pca$scores[,3], PC4=fulldata_pca$scores[,4])
 ggplot(fulldata_df, aes(PC3,PC4,color=OpioidVisits))+geom_point()+geom_text_repel(aes(label=County),color=&quot;black&quot;)</code></pre>
-<p><img src="/blog/Project1_files/figure-html/Dimensionality%20Reduction%204-1.png" width="672" /></p>
+<p><img src="/resume/Project1_files/figure-html/Dimensionality%20Reduction%204-1.png" width="672" /></p>
 <p>Just like PC 1&amp;2, PC4 does not seem to separate the dataset based on whether the county in question has a high, medium, or low amount of opioid related ED visits nor does PC4. However,</p>
 <pre class="r"><code>fulldata_pca$loadings[2:7,1:2]%&gt;%as.data.frame%&gt;%rownames_to_column %&gt;% ggplot()+geom_hline(aes(yintercept=0),lty=2)+geom_vline(aes(xintercept=0),lty=2)+ylab(&quot;PC2&quot;)+xlab(&quot;PC1&quot;)+geom_segment(aes(x=0,y=0,xend=Comp.1,yend=Comp.2), arrow=arrow(),col=&quot;red&quot;)+geom_label(aes(x=Comp.1*1.1,y=Comp.2*1.1,label=rowname))</code></pre>
-<p><img src="/blog/Project1_files/figure-html/Dimensionality%20Reduction%205-1.png" width="672" /></p>
+<p><img src="/resume/Project1_files/figure-html/Dimensionality%20Reduction%205-1.png" width="672" /></p>
 <pre class="r"><code>fulldata_pca$loadings[2:7,3:4]%&gt;%as.data.frame%&gt;%rownames_to_column %&gt;% ggplot()+geom_hline(aes(yintercept=0),lty=2)+geom_vline(aes(xintercept=0),lty=2)+ylab(&quot;PC4&quot;)+xlab(&quot;PC3&quot;)+geom_segment(aes(x=0,y=0,xend=Comp.3,yend=Comp.4), arrow=arrow(),col=&quot;red&quot;)+geom_label(aes(x=Comp.3*1.1,y=Comp.4*1.1,label=rowname))</code></pre>
-<p><img src="/blog/Project1_files/figure-html/Dimensionality%20Reduction%205-2.png" width="672" />
+<p><img src="/resume/Project1_files/figure-html/Dimensionality%20Reduction%205-2.png" width="672" />
 For the plot with PC1 and PC2: The angles between vectors interpreted as correlations so % having a bachelor’s Degree or higher and Per capital income are highly correlated wiith each other and negatively correlated with PC1 and % in poverty and unemployment rateare correlated with each other and psitively with PC1. % in poverty and unemployment rate are not strongly correlated with % having a bachelor’s Degree or higher, Median household income, % high school graduate or higher, nor Per capital income.
 For the plot with PC3 and PC4: % in poverty, % high school graduate or higher, and % having a bachelor’s Degree or higher are highly correlated and ot highly correlated with Unemployment rate, median household income, and per capita income.</p>
 </div>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/docs.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script src="/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>
