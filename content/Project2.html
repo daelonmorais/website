@@ -1,0 +1,418 @@
+---
+title: 'Project 2: Modeling, Testing, and Predicting'
+author: "Daelon Morais djm4445"
+date: ''
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      collapsed: no
+      smooth_scroll: yes
+  pdf_document:
+    toc: yes
+---
+
+
+
+<div id="data" class="section level2">
+<h2>Data</h2>
+<pre class="r"><code>incomePoverty &lt;- read_excel(&quot;~/Documents/UT/Classes/SDS 348/incomePoverty.xlsx&quot;)
+educationEmployment &lt;- read_excel(&quot;~/Documents/UT/Classes/SDS 348/educationEmployment.xlsx&quot;)
+opioidEDvisits &lt;- read_excel(&quot;~/Documents/UT/Classes/SDS 348/opioidEDvisits.xlsx&quot;)
+fulldata &lt;- opioidEDvisits %&gt;% full_join(incomePoverty, by=&quot;County&quot;)%&gt;% full_join(educationEmployment, by=&quot;County&quot;)%&gt;% na.omit(fulldata)</code></pre>
+<p>The first dataset contains income and poverty data by county for all counties in Texas. It contains the variables: Counties, Per Capita Income, Median Household Income, and % of Population in Poverty. The second dataset contains data about the level of education and employment by county and contains the variables: Counties, % High School Graduate or Higher, % Bachelor s Degree or Higher, and Unemployment Rate (%). The third dataset contains data on opioid-related emergency department visits in 2017 by county. It contains the variables: Counties and Number of Opioid-Related Emergency Department Visits. Some data is suppressed from some of the counties due to privacy concerns and patient protection.
+The first two datasets cam from the same source, the Texas Association of Counties. You can select a variety of variables and export the data from their website. The third dataset regard opioid-related visits to the ED came from the Department of State Health Services. They have an interactive data visualizer through their website, but I had to email them to get the raw CSV file.<br />
+I chose these datasets becuase they are similar to the project I did in BIO328M but also very different. Back then, and currently, I am interest in emergency medicine as a potential career path. In biostatics, I looked into the association between education level and the number of trauma cases by county. Since that time, I have begun to be interested in the ongoing opioid epidemic and have decide to pursue research regarding the precribing of opioid in the emergency department. Although income, poverty, education, and employment are not variables I am investigating in my thesis, I thought it would be interesting to look into any possible associations between the variables.<br />
+I assume to see poverty levels and unemployment rates to bepositively correlated to the number of opioid-related visits to the ED while expecting income and education to be negatively correlated to the number of opioid-related visits to the ED. This is due to socio-economic variables that affect drug abuse. The opioid data can be due to improper discharge instructions, lack of education about the dangers of the medication, addiction, and more.</p>
+</div>
+<div id="manova" class="section level2">
+<h2>MANOVA</h2>
+<pre class="r"><code>#create a categorical response variable, split into 3, 1=low, 2=medium, 3=high
+fulldata$EDvisits_cat &lt;- as.numeric(cut_number(fulldata$`Number of Opioid-Related Emergency Department Visits`,3))
+#manova test
+man1&lt;-manova(cbind(`% Bachelor s Degree or Higher`,`% High School Graduate or Higher`,`% of Population in Poverty`,`Unemployment Rate (%)`,`Median Household Income`, `Per Capita Income`)~EDvisits_cat, data=fulldata)
+summary(man1)</code></pre>
+<pre><code>## Df Pillai approx F num Df den Df Pr(&gt;F)
+## EDvisits_cat 1 0.23287 6.0712 6 120 1.412e-05 ***
+## Residuals 125
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre class="r"><code>#univariate ANOVA test
+summary.aov(man1)</code></pre>
+<pre><code>## Response % Bachelor s Degree or Higher :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## EDvisits_cat 1 1171.5 1171.54 22.736 5.08e-06 ***
+## Residuals 125 6441.0 51.53
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Response % High School Graduate or Higher :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## EDvisits_cat 1 365.0 364.96 9.6227 0.002376 **
+## Residuals 125 4740.9 37.93
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Response % of Population in Poverty :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## EDvisits_cat 1 28.73 28.730 1.2556 0.2646
+## Residuals 125 2860.08 22.881
+##
+## Response Unemployment Rate (%) :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## EDvisits_cat 1 0.205 0.20496 0.1367 0.7122
+## Residuals 125 187.472 1.49978
+##
+## Response Median Household Income :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## EDvisits_cat 1 1.3130e+09 1313001635 8.5744 0.004052 **
+## Residuals 125 1.9141e+10 153130539
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Response Per Capita Income :
+## Df Sum Sq Mean Sq F value Pr(&gt;F)
+## EDvisits_cat 1 2.0338e+06 2033757 0.0239 0.8775
+## Residuals 125 1.0649e+10 85188679</code></pre>
+<pre class="r"><code>#post-hoc t tests
+pairwise.t.test(fulldata$`% High School Graduate or Higher`,fulldata$EDvisits_cat,p.adj=&quot;none&quot;)</code></pre>
+<pre><code>##
+## Pairwise comparisons using t tests with pooled SD
+##
+## data: fulldata$`% High School Graduate or Higher` and
+fulldata$EDvisits_cat
+##
+## 1 2
+## 2 0.0855 -
+## 3 0.0026 0.2313
+##
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(fulldata$`% Bachelor s Degree or Higher`,fulldata$EDvisits_cat,p.adj=&quot;none&quot;)</code></pre>
+<pre><code>##
+## Pairwise comparisons using t tests with pooled SD
+##
+## data: fulldata$`% Bachelor s Degree or Higher` and
+fulldata$EDvisits_cat
+##
+## 1 2
+## 2 0.8 -
+## 3 1.7e-06 2.3e-06
+##
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>pairwise.t.test(fulldata$`Median Household Income`,fulldata$EDvisits_cat,p.adj=&quot;none&quot;)</code></pre>
+<pre><code>##
+## Pairwise comparisons using t tests with pooled SD
+##
+## data: fulldata$`Median Household Income` and
+fulldata$EDvisits_cat
+##
+## 1 2
+## 2 0.4863 -
+## 3 0.0038 0.0388
+##
+## P value adjustment method: none</code></pre>
+<pre class="r"><code>#Bonferroni Adjustment: at least 1 type I error
+1-(.95)^16</code></pre>
+<pre><code>## [1] 0.5598733</code></pre>
+<pre class="r"><code>.05/16</code></pre>
+<pre><code>## [1] 0.003125</code></pre>
+<p>For the MANOVA, the hypotheses are: H0: For <code>% Bachelor s Degree or Higher</code>,<code>% High School Graduate or Higher</code>,<code>% of Population in Poverty</code>,<code>Unemployment Rate (%)</code>,<code>Median Household Income</code>, <code>Per Capita Income</code>, means of each level of EDvisits are equal; Ha: For at least one DV, at least one EDvisits level mean is different. A one-way multivariate analysis of variance (MANOVA) was conducted to determine the effect of the iris Species (setosa, versicolor, virginica) on two dependent variables (<code>% Bachelor s Degree or Higher</code>,<code>% High School Graduate or Higher</code>,<code>% of Population in Poverty</code>,<code>Unemployment Rate (%)</code>,<code>Median Household Income</code>, and <code>Per Capita Income</code>). Significant differences were found among the dependent variables. Pillai trace=0.23287, pseudo F(120,6)=,p&lt;.0001)
+Univariate analyses of variance (ANOVAs) for each dependent variable were conducted as follow-up tests to the MANOVA, using the Bonferroni method for controlling Type I error rates for multiple comparisons. The univariate ANOVAs for the three EDvisit categories on the dependent
+measures % Bachelor s Degree or Higher (p&lt;5.08e-06), % High School Graduate or Higher (p&lt;0.002376), and Median Household Income (p&lt;0.004052).Since I have 1 MANOVA with 3 significant numeric response variables, I have have 1 (MANOVA) + 6 (ANOVA) + 3*3 (t-tests) for a total of 10 tests. So probability of at least one type I error is 0.5598733 My new p-value is .003.
+Post hoc analysis was performed conducting pairwise comparisons to determine which ED visit categories differed in % Bachelor s Degree or Higher, % High School Graduate or Higher, and Median Household Income. For % High School Graduate or Higher, the lowest and highest categories of the number of ED visits significantly differed (p=0.0026). % Bachelor s Degree or Higher significantly differed between the middle group and the highest group (p=2.3e-06) and the lowest group and the highest group((p=1.7e-06). Median Household Income did not significantly differ among the groups .
+The univariate anova tests confirmed the differences. Regarding the assumptions, this is not a random sample since it is all the counties in Texas. Additionally, the dependent variables are probably correlated and most likely have a linear relatioship since education and income are typically associated which violates another assumption. There may be some extreme valus since some counties have very samll populations. The other assumptions of Multivariate normality of DVs and Homogeneity of within-group covariance matrices might be met.</p>
+</div>
+<div id="radomization-test" class="section level2">
+<h2>Radomization Test</h2>
+<pre class="r"><code>#randomization test
+obs_F&lt;-22.74
+Fs&lt;-replicate(5000,{
+ new&lt;-fulldata%&gt;%mutate(Bachelors_sample=sample(`% Bachelor s Degree or Higher`))
+ SSW&lt;- new%&gt;%group_by(EDvisits_cat)%&gt;%summarize(SSW=sum((Bachelors_sample-mean(Bachelors_sample))^2))%&gt;%summarize(sum(SSW))%&gt;%pull
+ SSB&lt;- new%&gt;%mutate(mean=mean(Bachelors_sample))%&gt;%group_by(EDvisits_cat)%&gt;%mutate(groupmean=mean(Bachelors_sample))%&gt;%
+ summarize(SSB=sum((mean-groupmean)^2))%&gt;%summarize(sum(SSB))%&gt;%pull
+ (SSB/2)/(SSW/57)
+})
+#plot visualizing the null distribution and the test statistic
+hist(Fs, prob=T); abline(v = obs_F, col=&quot;red&quot;,add=T)</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>mean(Fs&gt;obs_F)</code></pre>
+<pre><code>## [1] 0</code></pre>
+<p>The null hypothesis is H0: for each ED visit level, the means of the groups of ED visits are equal and Ha: For at least one ED visit category, at least one group of ED visits mean differs. Since the mean(Fs&gt;obs_F) is 0, we reject the null and say that the % of the counties population with Bachelor s Degree or Higher differs across varying levels of ED visits.</p>
+</div>
+<div id="linear-regression-model" class="section level2">
+<h2>Linear Regression Model</h2>
+<pre class="r"><code>EDvisits&lt;-fulldata$`Number of Opioid-Related Emergency Department Visits`#-mean(fulldata$`Number of Opioid-Related Emergency Department Visits`)
+Bachelors_c&lt;-fulldata$`% Bachelor s Degree or Higher`-mean(fulldata$`% Bachelor s Degree or Higher`)
+MedIncome_c&lt;-fulldata$`Median Household Income`-mean(fulldata$`Median Household Income`)
+MedIncome&lt;-fulldata$`Median Household Income`
+centeredData&lt;-data.frame(EDvisits,Bachelors_c, MedIncome_c,MedIncome)
+fit&lt;-lm(EDvisits ~MedIncome_c*Bachelors_c, data=centeredData)
+summary(fit)</code></pre>
+<pre><code>##
+## Call:
+## lm(formula = EDvisits ~ MedIncome_c * Bachelors_c, data
+= centeredData)
+##
+## Residuals:
+## Min 1Q Median 3Q Max
+## -171.52 -54.26 -26.12 -1.75 948.47
+##
+## Coefficients:
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 6.700e+01 1.545e+01 4.337 2.98e-05 ***
+## MedIncome_c -3.812e-04 1.469e-03 -0.260 0.7957
+## Bachelors_c 6.549e+00 2.520e+00 2.599 0.0105 *
+## MedIncome_c:Bachelors_c 1.114e-05 1.099e-04 0.101 0.9195
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Residual standard error: 157.5 on 123 degrees of freedom
+## Multiple R-squared: 0.09122, Adjusted R-squared: 0.06905
+## F-statistic: 4.115 on 3 and 123 DF, p-value: 0.008056</code></pre>
+<pre class="r"><code>#Plot of the Regression
+new1&lt;-centeredData
+new1$MedIncome_c&lt;-mean(centeredData$MedIncome_c)
+new1$mean&lt;-predict(fit,new1)
+new1$MedIncome_c&lt;-mean(centeredData$MedIncome_c)+sd(centeredData$MedIncome_c)
+new1$plus.sd&lt;-predict(fit,new1)
+new1$MedIncome_c&lt;-mean(centeredData$MedIncome_c)-sd(centeredData$MedIncome_c)
+new1$minus.sd&lt;-predict(fit,new1)
+newint&lt;-new1%&gt;%dplyr::select(EDvisits,Bachelors_c,mean,plus.sd,minus.sd)%&gt;%gather(MedIncome,value,-EDvisits,-Bachelors_c)
+
+mycols&lt;-c(&quot;#619CFF&quot;,&quot;#F8766D&quot;,&quot;#00BA38&quot;)
+names(mycols)&lt;-c(&quot;-1 sd&quot;,&quot;mean&quot;,&quot;+1 sd&quot;)
+mycols=as.factor(mycols)
+
+ggplot(centeredData,aes(Bachelors_c,EDvisits),group=mycols)+geom_point()+geom_line(data=new1,aes(y=mean,color=&quot;mean&quot;))+geom_line(data=new1,aes(y=plus.sd,color=&quot;+1 sd&quot;))+geom_line(data=new1,aes(y=minus.sd,color=&quot;-1 sd&quot;))+scale_color_manual(values=mycols)+labs(color=&quot;Median Income ($) (cont)&quot;)+theme(legend.position=c(.9,.2))</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Check Assumptions
+plot(fit)</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-4-2.png" width="768" style="display: block; margin: auto;" /><img src="/Project2_files/figure-html/unnamed-chunk-4-3.png" width="768" style="display: block; margin: auto;" /><img src="/Project2_files/figure-html/unnamed-chunk-4-4.png" width="768" style="display: block; margin: auto;" /><img src="/Project2_files/figure-html/unnamed-chunk-4-5.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>resids&lt;-fit$residuals
+#homoskedasticity 
+bptest(fit) </code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  fit
+## BP = 1.8394, df = 3, p-value = 0.6064</code></pre>
+<pre class="r"><code>#linearity
+shapiro.test(resids) #Ho: distribution is normal</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  resids
+## W = 0.4677, p-value &lt; 2.2e-16</code></pre>
+<pre class="r"><code>#normality
+ks.test(resids, &quot;pnorm&quot;, mean=0, sd(resids)) #Ho: distribution is normal</code></pre>
+<pre><code>## 
+##  One-sample Kolmogorov-Smirnov test
+## 
+## data:  resids
+## D = 0.31806, p-value = 1.387e-11
+## alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code>#corrected SE
+coeftest(fit, vcov = vcovHC(fit))</code></pre>
+<pre><code>##
+## t test of coefficients:
+##
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 6.7002e+01 1.7227e+01 3.8895 0.0001635 ***
+## MedIncome_c -3.8118e-04 7.1788e-04 -0.5310 0.5963923
+## Bachelors_c 6.5492e+00 3.7251e+00 1.7581 0.0812142 .
+## MedIncome_c:Bachelors_c 1.1138e-05 1.0689e-04 0.1042
+0.9171797
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre class="r"><code>#main effects
+fit1&lt;-lm(EDvisits ~MedIncome_c+Bachelors_c, data=centeredData)
+summary(fit1)</code></pre>
+<pre><code>##
+## Call:
+## lm(formula = EDvisits ~ MedIncome_c + Bachelors_c, data
+= centeredData)
+##
+## Residuals:
+## Min 1Q Median 3Q Max
+## -173.21 -54.26 -25.80 -1.17 949.53
+##
+## Coefficients:
+## Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) 67.6692913 13.9215569 4.861 3.46e-06 ***
+## MedIncome_c -0.0003329 0.0013837 -0.241 0.81027
+## Bachelors_c 6.6585933 2.2681367 2.936 0.00397 **
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1
+##
+## Residual standard error: 156.9 on 124 degrees of freedom
+## Multiple R-squared: 0.09114, Adjusted R-squared: 0.07648
+## F-statistic: 6.217 on 2 and 124 DF, p-value: 0.002672</code></pre>
+<p>The Best-fitting line: # of ED Visits = 6.700e+01 + 6.549e+00(% with Bachelors Degree). % with Bachelors Degree explains a significant amount of variation in Opioid ED Visits (t=2.599, df =123, p&lt;.05 ).
+When median income and % with a Bachelor’s Degree or higher are average, there are 67.6692913 ED visits on average. While holding median income constant, for every one percent average increase in % with Bachelors Degree, there is a 6.549 average increase in visits to the ED. While holding % of Bachelors degree constant, on average, every $1 decrease in median income results in a -3.812e-04 in # of ED visits. There’s no significant difference in slope for ED Visits v % Bachelor’s degree based on varying levels of median income.
+The model explains 0.09122 of the variation in the Number of ED visits.
+The BP test (P&gt;.05) means that my data is homoskedastic, Shapiro-Wilk normality (p&lt;.001) means my data is not linear, and the Kolmogorov-Smirnov test (p&lt;.001) means the data is not normal.
+With the Robust SEs, the estimates did not change. The SEs increased for the intercept and was significant (p&lt;.001). The estimate stayed the same for the Median Income, decreased greatly for the % of Bahelor’s Degrees or higher, and decreased for the interaction between median income and % of Bachelor’s degrees but none of these changes were significant.
+## Linear Regression Model with Bootstrapped SEs</p>
+<pre class="r"><code>set.seed(1234)
+samp_distn&lt;-replicate(5000, {
+ boot_dat&lt;-centeredData[sample(nrow(centeredData),replace=TRUE),]
+ fit&lt;-lm(EDvisits ~MedIncome_c*Bachelors_c, data=boot_dat)
+ coef(fit)
+})
+samp_distn%&gt;%t%&gt;%as.data.frame%&gt;%summarize_all(sd)</code></pre>
+<pre><code>## (Intercept) MedIncome_c Bachelors_c
+MedIncome_c:Bachelors_c
+## 1 17.10774 0.0007151817 3.724178 0.000119774</code></pre>
+<p>The estimates for SEs compared to the original SEs increased dramatically to 17.03567 for the intercept, Median income increased as well to 0.0007205464, % with Bachelor’s degrees increased to 3.703015, and the interaction increased to 0.0001183407. Compared to the robust SEs: intercept increased, median income decreased, increased for the % with a Bachelor’s degree or higher and decreased for the interaction. The p values increased for the robust SE median income and decreased for the Bachelor’s degree.<br />
+## Logistic Regression</p>
+<pre class="r"><code>class_diag&lt;-function(probs,truth){
+ tab&lt;-table(factor(probs&gt;.5,levels=c(&quot;FALSE&quot;,&quot;TRUE&quot;)),truth)
+ acc=sum(diag(tab))/sum(tab)
+ sens=tab[2,2]/colSums(tab)[2]
+ spec=tab[1,1]/colSums(tab)[1]
+ ppv=tab[2,2]/rowSums(tab)[2]
+ if(is.numeric(truth)==FALSE &amp; is.logical(truth)==FALSE) truth&lt;-as.numeric(truth)-1
+ #CALCULATE EXACT AUC
+ ord&lt;-order(probs, decreasing=TRUE)
+ probs &lt;- probs[ord]; truth &lt;- truth[ord]
+ TPR=cumsum(truth)/max(1,sum(truth))
+ FPR=cumsum(!truth)/max(1,sum(!truth))
+ dup&lt;-c(probs[-1]&gt;=probs[-length(probs)], FALSE)
+ TPR&lt;-c(0,TPR[!dup],1); FPR&lt;-c(0,FPR[!dup],1)
+ n &lt;- length(TPR)
+ auc&lt;- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n]) )
+ data.frame(acc,sens,spec,ppv,auc)
+} 
+lotsOfEDvisits&lt;-ifelse(fulldata$`Number of Opioid-Related Emergency Department Visits`&gt;median(fulldata$`Number of Opioid-Related Emergency Department Visits`),1,0)
+#EDvisits&lt;-fulldata$`Number of Opioid-Related Emergency Department Visits`
+Bachelors&lt;-fulldata$`% Bachelor s Degree or Higher`
+MedIncome&lt;-fulldata$`Median Household Income`
+binaryData&lt;-data.frame(lotsOfEDvisits,Bachelors, MedIncome)
+fit&lt;-glm(lotsOfEDvisits~Bachelors+MedIncome,data=binaryData,family=binomial(link=&quot;logit&quot;))
+coeftest(fit)</code></pre>
+<pre><code>##
+## z test of coefficients:
+##
+## Estimate Std. Error z value Pr(&gt;|z|)
+## (Intercept) -2.7769e+00 9.5014e-01 -2.9227 0.003471 **
+## Bachelors 1.0010e-01 3.6048e-02 2.7769 0.005488 **
+## MedIncome 1.3834e-05 1.9735e-05 0.7010 0.483290
+## ---
+## Signif. codes: 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1
+&#39; &#39; 1</code></pre>
+<pre class="r"><code>exp(coef(fit))</code></pre>
+<pre><code>## (Intercept)   Bachelors   MedIncome 
+##   0.0622286   1.1052832   1.0000138</code></pre>
+<pre class="r"><code>probs&lt;-predict(fit,type=&quot;response&quot;)
+class_diag(probs,binaryData$lotsOfEDvisits)</code></pre>
+<pre><code>##         acc sens      spec       ppv       auc
+## 1 0.6141732  0.5 0.7230769 0.6326531 0.6858561</code></pre>
+<pre class="r"><code>yhat&lt;-predict(fit) 
+mean((binaryData$lotsOfEDvisits-yhat)^2) #mean squared error (MSE)</code></pre>
+<pre><code>## [1] 0.9720963</code></pre>
+<pre class="r"><code>#Confusion Martrix
+pred&lt;-ifelse(probs&gt;.5,1,0) 
+table(predictions=pred,truth=binaryData$lotsOfEDvisits)%&gt;%addmargins</code></pre>
+<pre><code>##            truth
+## predictions   0   1 Sum
+##         0    47  31  78
+##         1    18  31  49
+##         Sum  65  62 127</code></pre>
+<pre class="r"><code>#plot density of log-odds (logit) by binary outcome variable
+data&lt;-binaryData
+data$lotsOfEDvisits&lt;-as.factor(data$lotsOfEDvisits)
+data$logit&lt;-predict(fit,type=&quot;link&quot;)
+
+data%&gt;%ggplot()+geom_density(aes(logit,color=lotsOfEDvisits,fill=lotsOfEDvisits), alpha=.4)+
+  theme(legend.position=c(.85,.85))+geom_vline(xintercept=0)+xlab(&quot;predictor (logit)&quot;)</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#ROC Curve
+data$prob&lt;-predict(fit,type=&quot;response&quot;) 
+sens&lt;-function(p,data=data, y=lotsOfEDvisits) mean(data[data$lotsOfEDvisits==1,]$prob&gt;p)
+spec&lt;-function(p,data=data, y=lotsOfEDvisits) mean(data[data$lotsOfEDvisits==0,]$prob&lt;p)
+sensitivity&lt;-sapply(seq(0,1,.01),sens,data)
+specificity&lt;-sapply(seq(0,1,.01),spec,data)
+ROC1&lt;-data.frame(sensitivity,specificity,cutoff=seq(0,1,.01))
+ROC1$TPR&lt;-sensitivity
+ROC1$FPR&lt;-1-specificity
+ROC1%&gt;%ggplot(aes(FPR,TPR))+geom_path(size=1.5)+geom_segment(aes(x=0,y=0,xend=1,yend=1),lty=2)+
+ scale_x_continuous(limits = c(0,1))</code></pre>
+<p><img src="/Project2_files/figure-html/unnamed-chunk-6-2.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#AUC
+widths&lt;-diff(ROC1$FPR) #horizontal distances
+heights&lt;-vector() #sum of top and bottom vertical line in loop
+for(i in 1:100) heights[i]&lt;-ROC1$TPR[i]+ROC1$TPR[i+1]
+AUC&lt;-sum(heights*widths/2) #sum up areas of trapezoids
+AUC%&gt;%round(3)</code></pre>
+<pre><code>## [1] -0.683</code></pre>
+<pre class="r"><code>#10-fold
+set.seed(1234)
+k=10
+data1&lt;-binaryData[sample(nrow(binaryData)),] #put dataset in random order
+folds&lt;-cut(seq(1:nrow(binaryData)),breaks=k,labels=F) #create folds
+diags&lt;-NULL
+for(i in 1:k){ # FOR EACH OF 10 FOLDS
+  train&lt;-data1[folds!=i,] #CREATE TRAINING SET
+  test&lt;-data1[folds==i,] #CREATE TESTING SET
+  truth&lt;-test$lotsOfEDvisits
+  
+  fit&lt;- glm(lotsOfEDvisits~(.),data=binaryData,family=&quot;binomial&quot;)
+  prob&lt;- predict(fit,newdata = test,type=&quot;response&quot;)
+  
+  diags&lt;-rbind(diags,class_diag(prob,truth)) 
+}
+apply(diags,2,mean)</code></pre>
+<pre><code>##       acc      sens      spec       ppv       auc 
+## 0.6160256 0.5067857 0.7296429 0.6416667 0.6857143</code></pre>
+<p>‘lotsOfED’ is a binary variable I created that separated the Numer of opioid related ED visits into a 1,0’s to represent a high or low number of visits. For $0 median income and 0% bachelors degree, the odds of having a high number of ED visits is 0.0622286. Every one-unit increase in % Bachelor’s degrees or higher multiplies odds of having a high number of ED visits by 1.105281. Every one-unit increase in Median Income multiplies odds of having a high number of ED visits by 1.000014. However, Median income is not significant while % Bachelor’s degree or higher is (p&lt;.01). The accuracy is 0.6141732 which is the proportion of correctly classified level of ED visit counties. The sensitivity (TPR) is .5 which is the proportion of correctly identified high number ED visit counties. The specificity is 0.7230769 is the proportion of low number ED visits correctly classified. The PPV (precision) is 0.6326531 is the proportion of high number of ED visits correctly classified out of the high level ED visits. The AUC is 0.6858561 which is not a very good predictor because it is the probability that a randomly county that has a higher number of ED visits has a higher prediction than a randomly selected county with a low amount of ED visits. . After the 10 fold, The accuracy is 0.6141026, the sensitivity (TPR) is 0.4988095, the specificity is 0.7374603 is the proportion of high number ED visits correctly classified. The PPV (TNR) is 0.6469048 is proportion of benigns correctly classified. The AUC is 0.6776984 which is still not a very good predictor. The MSE is 0.9720963.</p>
+</div>
+<div id="lasso-regression" class="section level2">
+<h2>Lasso Regression</h2>
+<ul>
+<li><strong>6. (10 pts)</strong> Choose one variable you want to predict (can be one you used from before; either binary or continuous) and run a LASSO regression inputting all the rest of your variables as predictors. Choose lambda to give the simplest model whose accuracy is near that of the best (i.e., <code>lambda.1se</code>). Discuss which variables are retained. Perform 10-fold CV using this model: if response in binary, compare model’s out-of-sample accuracy to that of your logistic regression in part 5; if response is numeric, compare the residual standard error (at the bottom of the summary output, aka RMSE): lower is better fit!</li>
+</ul>
+<pre class="r"><code>library(glmnet)
+fulldata$lotsOfEDvisits&lt;-ifelse(fulldata$`Number of Opioid-Related Emergency Department Visits`&gt;median(fulldata$`Number of Opioid-Related Emergency Department Visits`),1,0)
+y&lt;-as.matrix(fulldata$lotsOfEDvisits)
+x&lt;-fulldata%&gt;%dplyr::select(-c(County,`Number of Opioid-Related Emergency Department Visits`,lotsOfEDvisits))%&gt;%mutate_all(scale)%&gt;%as.matrix
+cv&lt;-cv.glmnet(x,y) 
+lasso1&lt;-glmnet(x,y,lambda=cv$lambda.1se)
+coef(lasso1)</code></pre>
+<pre><code>## 8 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
+##                                         s0
+## (Intercept)                      0.4881890
+## Per Capita Income                .        
+## Median Household Income          .        
+## % of Population in Poverty       .        
+## % High School Graduate or Higher .        
+## % Bachelor s Degree or Higher    .        
+## Unemployment Rate (%)            .        
+## EDvisits_cat                     0.3179019</code></pre>
+<pre class="r"><code>set.seed(1234)
+k=10 #choose number of folds
+data1&lt;-fulldata[sample(nrow(fulldata)),] #randomly order rows
+folds&lt;-cut(seq(1:nrow(fulldata)),breaks=k,labels=F) #create folds
+diags&lt;-NULL
+for(i in 1:k){
+ train&lt;-data1[folds!=i,]
+ test&lt;-data1[folds==i,]
+ truth&lt;-test$lotsOfEDvisits
+ fit&lt;-glm(lotsOfEDvisits~`% Bachelor s Degree or Higher`,data=train,family=&quot;binomial&quot;)
+ probs&lt;-predict(fit,newdata = test,type=&quot;response&quot;)
+ preds&lt;-ifelse(probs&gt;.5,1,0)
+ diags&lt;-rbind(diags,class_diag(probs,truth))
+}
+diags%&gt;%summarize_all(mean)</code></pre>
+<pre><code>##         acc      sens      spec       ppv       auc
+## 1 0.6384615 0.5234524 0.7564286 0.6680952 0.6933929</code></pre>
+<p>The % Bachelor s Degree or Higher variables was retained which means it is an important and accurate predictor (0.4881890) for whether a county has a high number of opioid related ED visits or not. The model’s out-of-sample accuracy is 0.6134615 which is less than the accuracy from part 5 which was 0.6141732 making the logistic regression a better model.
+…</p>
+</div>

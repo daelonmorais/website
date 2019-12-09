@@ -1,0 +1,9 @@
+name: Projects
+source:
+  - icon: fa fa-github [Link to project 1](/Project1)
+    description: Project 1 of SDS348
+    
+  - icon: fa fa-github
+    description: Project 2 of SDS348
+
+ 

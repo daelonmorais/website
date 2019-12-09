@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Project 3</title>
+    <title>Chris Turner</title>
     <link>/</link>
-    <description>Recent content on Project 3</description>
+    <description>Recent content on Chris Turner</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 02 Oct 2016 22:55:05 -0400</lastBuildDate>
+    <lastBuildDate>Sun, 08 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Currently in class...</title>
+      <link>/blog/currently-in-class/</link>
+      <pubDate>Sun, 08 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/currently-in-class/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Resume</title>
+      <link>/resume/</link>
+      <pubDate>Sun, 08 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/resume/</guid>
+      <description>  https://www.linkedin.com/in/daelonmorais/
+ EDUCATION The University of Texas at Austin, Austin, TX Bachelor of Science and Arts in Biology Transcript Certificate in Business of Healthcare, Elements of Computing, &amp;amp; Pre-Health Professions
+GPA: 3.9228
+  WORK EXPERIENCE  UT Sanger Learning Center Tutor  Tutored students in chemistry, math, and physics  Scribeology Medical Scribe, Dallas-Fort Worth, Texas Part-time  Documented Patient Information &amp;amp; Physician Charts  Smiles For You Dentistry, Grapevine, TX Part-time  Help dental assistants prep Scheduling appointments, Checking-in patients, and Managing Insurance Data    INTERESTS  Music Creation Coding Baking   SKILLS Certifications / Professional Memberships / Exams:  NR EMT-B Certification CPR Certified Basic Life Support Certification Programming Languages: Python, R , HTML, CSS, Javascript, Excel    ACCOMPLISHMENTS  Health Science Scholars Honors College Scholar   </description>
+    </item>
     
     <item>
       <title>Projects</title>
@@ -17,7 +38,19 @@
       <pubDate>Sun, 02 Oct 2016 22:55:05 -0400</pubDate>
       
       <guid>/projects/</guid>
-      <description></description>
+      <description>Projects Here are some projects I have been working on:
+  Project 1
+  Project 2
+  </description>
+    </item>
+    
+    <item>
+      <title>Project 2: Modeling, Testing, and Predicting</title>
+      <link>/project2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project2/</guid>
+      <description>Data incomePoverty &amp;lt;- read_excel(&amp;quot;~/Documents/UT/Classes/SDS 348/incomePoverty.xlsx&amp;quot;) educationEmployment &amp;lt;- read_excel(&amp;quot;~/Documents/UT/Classes/SDS 348/educationEmployment.xlsx&amp;quot;) opioidEDvisits &amp;lt;- read_excel(&amp;quot;~/Documents/UT/Classes/SDS 348/opioidEDvisits.xlsx&amp;quot;) fulldata &amp;lt;- opioidEDvisits %&amp;gt;% full_join(incomePoverty, by=&amp;quot;County&amp;quot;)%&amp;gt;% full_join(educationEmployment, by=&amp;quot;County&amp;quot;)%&amp;gt;% na.omit(fulldata) The first dataset contains income and poverty data by county for all counties in Texas. It contains the variables: Counties, Per Capita Income, Median Household Income, and % of Population in Poverty. The second dataset contains data about the level of education and employment by county and contains the variables: Counties, % High School Graduate or Higher, % Bachelor s Degree or Higher, and Unemployment Rate (%).</description>
     </item>
     
     <item>
@@ -26,15 +59,6 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/project1/</guid>
-      <description>Introduction The first dataset contains income and poverty data by county for all counties in Texas. It contains the variables: Counties, Per Capita Income, Median Household Income, and % of Population in Poverty. The second dataset contains data about the level of education and employment by county and contains the variables: Counties, % High School Graduate or Higher, % Bachelor s Degree or Higher, and Unemployment Rate (%). The third dataset contains data on opioid-related emergency department visits in 2017 by county.</description>
-    </item>
-    
-    <item>
-      <title>Project1 SDS348</title>
-      <link>/resume/project1/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/resume/project1/</guid>
       <description>Introduction The first dataset contains income and poverty data by county for all counties in Texas. It contains the variables: Counties, Per Capita Income, Median Household Income, and % of Population in Poverty. The second dataset contains data about the level of education and employment by county and contains the variables: Counties, % High School Graduate or Higher, % Bachelor s Degree or Higher, and Unemployment Rate (%). The third dataset contains data on opioid-related emergency department visits in 2017 by county.</description>
     </item>
     

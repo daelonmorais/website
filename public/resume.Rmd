@@ -1,0 +1,49 @@
+---
+title: "Resume"
+author: "Daelon Morais"
+date: '2019-12-08'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<center>
+
+<https://www.linkedin.com/in/daelonmorais/>
+
+</center>
+
+## **EDUCATION**
+### The University of Texas at Austin, Austin, TX
+Bachelor of Science and Arts in Biology
+Transcript Certificate in Business of Healthcare, Elements of Computing, & Pre-Health Professions
+
+GPA: 3.9228
+
+## **WORK EXPERIENCE**
+* UT Sanger Learning Center Tutor
+  + Tutored students in chemistry, math, and physics 
+
+* Scribeology Medical Scribe, Dallas-Fort Worth, Texas Part-time
+  + Documented Patient Information & Physician Charts 
+
+* Smiles For You Dentistry, Grapevine, TX Part-time
+  + Help dental assistants prep
+  + Scheduling appointments, Checking-in patients, and Managing Insurance Data 
+
+## **INTERESTS**
+* Music Creation
+* Coding
+* Baking
+
+## **SKILLS**
+### Certifications / Professional Memberships / Exams:
+* NR EMT-B Certification
+* CPR Certified
+* Basic Life Support Certification
+* Programming Languages: Python, R , HTML, CSS, Javascript, Excel
+
+## **ACCOMPLISHMENTS**
+* Health Science Scholars Honors
+* College Scholar
