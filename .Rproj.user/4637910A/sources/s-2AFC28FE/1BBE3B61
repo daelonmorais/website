@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "26995823",
+    "hash" : "0",
     "id" : "1BBE3B61",
-    "lastKnownWriteTime" : 1575652526,
-    "last_content_update" : 1575652526,
+    "lastKnownWriteTime" : 1575922732,
+    "last_content_update" : 1575922732257,
     "path" : "~/Desktop/website/themes/hugo-sustain/static/css/main.css",
     "project_path" : "themes/hugo-sustain/static/css/main.css",
     "properties" : {
+        "cursorPosition" : "3,27",
+        "scrollLine" : "0"
     },
     "read_only" : false,
     "read_only_alternatives" : [
