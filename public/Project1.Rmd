@@ -92,7 +92,7 @@ I used mutate to generate the variable ED_visit_prop which is a function of the 
 The mean per capita income by  % of population with a Bachelor's Degree or higher was $39384, $40397, and $47779 while the mean median income was $48101, $50407, and $61735. As expected, higher percentages of bachelor degree holders is associated with higher incomes. The mean Unemployment by % of population with a Bachelor's Degree or higher is 4.66%, 4.4%, and 3.69%. The mean % of Population in Poverty by % of population with a Bachelor's Degree or higher is 16.9%, 16.0%, and 12.5%. As expected, higher percentages of bachelor degree holders is associated with lower rates of poverty and umemployment. In counties with a high proportion of bachelor degree holders, the trend that counties with higher per capita incomes having lower poverty rates still holds true.
 
 ## 4. Visualizing
-```{r Visualizing}
+```{r Visualizing , echo = FALSE}
 ggplot(fulldata, aes(x=`% Bachelor s Degree or Higher`))+geom_point(aes(y=`Per Capita Income`, size=(fulldata$`Number of Opioid-Related Emergency Department Visits`)), shape = 21,colour='black',fill='#1876f0')+scale_size_continuous(name = "Opioid-Related ED Visits")+ ggtitle("Plot of Per Captia Income by % of a County's Population with a Bachelor's Degree or Higher")+ylab("Per Capita Income ($)") + xlab("County's Population with a Bachelor's Degree or Higher (%)")+scale_y_continuous(breaks=seq(0,80000,5000))+theme(axis.text.x = element_text(colour="#f08f18"),axis.text.y = element_text(colour="#65a11e"),plot.title = element_text(size=10))
 
 fulldata1<-fulldata
