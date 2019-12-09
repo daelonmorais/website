@@ -15,21 +15,16 @@ description: ''
 
 ### Aligment Matrix
 
-#### By Hand
-<center>
-![Aligment done by hand.](/Users/DaelonMorais/Desktop/website/static/img/handAllignment.png)
-</center>
-
 #### By Python
 ``` {r, echo=F}
 library(reticulate)
 np <- import("numpy")
 ```
-``` {python, echo=F}
+``` {python}
 import numpy as np
 def match_fun(a,b): # Helper function to define match/mismatch scores
   if a==b:
-    score=2 #match score
+    score= 1#match score
   else:
     score=-1 #mismatch score
   return score
@@ -47,13 +42,20 @@ def needleman(seq1,seq2,gap_penalty=-1): # Needleman-Wunsch algorithm in a funct
       match = score[i - 1][j - 1] + match_fun(seq1[j-1], seq2[i-1])
       score[i][j] = max(match, delete, insert)
   return score
-seq1 = "CCAGT"
-seq2 = "ACAAGT"
+seq1="CT"
+seq2="CAT"
 needleman(seq1,seq2)
 ```
+#### Matrix with Arrows
+<center>
+
+![alignment matrix with arrows](/blog/2019-12-08-currently-in-class_files/withArrows.png){width=232px height=260px}
+
+</center>
+
 ### These are the aligned sequences:
 
-``` {python, echo=F}
+``` {python}
 def get_alignment(seq1,seq2,mat,gap_penalty=-1):
   j=len(seq1) #length of horizontal sequence
   i=len(seq2) #length of vertical sequence
