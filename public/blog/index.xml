@@ -17,7 +17,7 @@
       <pubDate>Mon, 09 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/blog/currently-in-class/</guid>
-      <description></description>
+      <description>Needleman-Wunsch Algorithm  used to score alignments In this example:  sequence 1 = “ACGCTTACCG” sequence 2 = “AGCCTACCCC”   Aligment Matrix By Hand    By Python ## array([[ 0., -1., -2., -3., -4., -5.], ## [-1., -1., -2., 0., -1., -2.], ## [-2., 1., 1., 0., -1., -2.], ## [-3., 0., 0., 3., 2., 1.], ## [-4., -1., -1., 2., 2., 1.], ## [-5., -2., -2.</description>
     </item>
     
   </channel>

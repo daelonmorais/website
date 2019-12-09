@@ -10,4 +10,37 @@ description: ''
 
 
 
-
+<div id="needleman-wunsch-algorithm" class="section level2">
+<h2>Needleman-Wunsch Algorithm</h2>
+<ul>
+<li>used to score alignments</li>
+<li>In this example:
+<ul>
+<li>sequence 1 = “ACGCTTACCG”</li>
+<li>sequence 2 = “AGCCTACCCC”</li>
+</ul></li>
+</ul>
+<div id="aligment-matrix" class="section level3">
+<h3>Aligment Matrix</h3>
+<div id="by-hand" class="section level4">
+<h4>By Hand</h4>
+<center>
+<img src="/Users/DaelonMorais/Desktop/website/static/img/handAllignment.png" alt="Aligment done by hand." />
+</center>
+</div>
+<div id="by-python" class="section level4">
+<h4>By Python</h4>
+<pre><code>## array([[ 0., -1., -2., -3., -4., -5.],
+##        [-1., -1., -2.,  0., -1., -2.],
+##        [-2.,  1.,  1.,  0., -1., -2.],
+##        [-3.,  0.,  0.,  3.,  2.,  1.],
+##        [-4., -1., -1.,  2.,  2.,  1.],
+##        [-5., -2., -2.,  1.,  4.,  3.],
+##        [-6., -3., -3.,  0.,  3.,  6.]])</code></pre>
+</div>
+</div>
+<div id="these-are-the-aligned-sequences" class="section level3">
+<h3>These are the aligned sequences:</h3>
+<pre><code>## (&#39;-CCAGT&#39;, &#39;ACAAGT&#39;)</code></pre>
+</div>
+</div>

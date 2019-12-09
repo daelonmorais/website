@@ -17,7 +17,7 @@
       <pubDate>Mon, 09 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/blog/currently-in-class/</guid>
-      <description></description>
+      <description>Needleman-Wunsch Algorithm  used to score alignments In this example:  sequence 1 = “ACGCTTACCG” sequence 2 = “AGCCTACCCC”   Aligment Matrix By Hand    By Python ## array([[ 0., -1., -2., -3., -4., -5.], ## [-1., -1., -2., 0., -1., -2.], ## [-2., 1., 1., 0., -1., -2.], ## [-3., 0., 0., 3., 2., 1.], ## [-4., -1., -1., 2., 2., 1.], ## [-5., -2., -2.</description>
     </item>
     
     <item>
@@ -26,10 +26,9 @@
       <pubDate>Sun, 08 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/resume/</guid>
-      <description>  https://www.linkedin.com/in/daelonmorais/
- EDUCATION The University of Texas at Austin, Austin, TX Bachelor of Science and Arts in Biology Transcript Certificate in Business of Healthcare, Elements of Computing, &amp;amp; Pre-Health Professions
-GPA: 3.9228
-  WORK EXPERIENCE  UT Sanger Learning Center Tutor  Tutored students in chemistry, math, and physics  Scribeology Medical Scribe, Dallas-Fort Worth, Texas Part-time  Documented Patient Information &amp;amp; Physician Charts  Smiles For You Dentistry, Grapevine, TX Part-time  Help dental assistants prep Scheduling appointments, Checking-in patients, and Managing Insurance Data    INTERESTS  Music Creation Coding Baking   SKILLS Certifications / Professional Memberships / Exams:  NR EMT-B Certification CPR Certified Basic Life Support Certification Programming Languages: Python, R , HTML, CSS, Javascript, Excel    ACCOMPLISHMENTS  Health Science Scholars Honors College Scholar   </description>
+      <description>https://www.linkedin.com/in/daelonmorais/
+ Hello there! My name is Daelon Morais, but you probably already know that since you’re checking out my website. No, you clicked on the “Resume” tab to learn much more than just my name, and I’m here to deliver.
+I’m naturally curious about so many eclectic subjects and being in the “Information Age” gives me unparalleled access to anything and everything I want to explore. Therefore, while my goal is to someday join the medical field, in my downtime, I like to dabble.</description>
     </item>
     
     <item>
@@ -39,8 +38,8 @@ GPA: 3.9228
       
       <guid>/projects/</guid>
       <description>Projects Here are some projects I have been working on:
-  Project 1
-  Project 2
+  Project 1: (Data Wrangling and Exploratory Analysis)
+  Project 2: (Modeling, Inference, Prediction)
   </description>
     </item>
     
