@@ -7,13 +7,13 @@ categories: []
 tags: []
 description: ''
 ---
-## Needleman-Wunsch Algorithm
+## **Needleman-Wunsch Algorithm**
 * used to score alignments
 * In this example:
   + sequence 1 = "ACGCTTACCG"
   + sequence 2 = "AGCCTACCCC"
 
-### Aligment Matrix
+### **Aligment Matrix**
 
 #### By Python
 ``` {r, echo=F}
