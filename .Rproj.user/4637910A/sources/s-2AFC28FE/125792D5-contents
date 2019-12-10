@@ -22,8 +22,8 @@ theme = "hugo-sustain"
 [params.social]
   Github        = "daelonmorais"
   Email         = "daelon.morais@utexas.edu"
-  Twitter       = "Daelon Morais"
-  LinkedIn      = "Daelon Morais"
+  Twitter       = "daelonmorais"
+  LinkedIn      = "DaelonMorais"
 
 ## Main Menu
 [[menu.main]]
